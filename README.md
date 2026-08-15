@@ -2,9 +2,9 @@
 CareConnect App
 
 Team Members:
-          Zack Bristor
-          Donald Keita
-          Sahil Kapoor
+          Zack Bristor <br>
+          Donald Keita <br>
+          Sahil Kapoor <br>
           
 Team charter link:
 
