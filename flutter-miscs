@@ -1,0 +1,41 @@
+# Flutter/Dart
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+
+# Build outputs
+build/
+flutter_*.png
+
+# iOS
+ios/Flutter/.last_build_id
+ios/Pods/
+ios/Runner/GeneratedPluginRegistrant.*
+
+# Android
+android/.gradle/
+android/app/build/
+android/local.properties
+
+# Web
+lib/generated_plugin_registrant.dart
+
+# VS Code
+.vscode/
+
+# IntelliJ
+.idea/
+*.iml
+
+# MacOS
+macos/Flutter/ephemeral/
+
+# Windows
+windows/Flutter/ephemeral/
+
+# Linux
+linux/flutter/ephemeral/
+
+# Misc
+.DS_Store
