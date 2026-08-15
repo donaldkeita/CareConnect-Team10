@@ -1,0 +1,39 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Metro bundler
+.expo/
+.expo-shared/
+
+# Logs
+logs/
+*.log
+
+# Build outputs
+dist/
+build/
+
+# iOS
+ios/Pods/
+ios/build/
+ios/DerivedData/
+*.xcworkspace
+*.xcuserdata/
+*.xcuserstate
+
+# Android
+android/.gradle/
+android/app/build/
+android/local.properties
+
+# React Native config
+.env
+.env.local
+.env.*.local
+
+# OS-specific
+.DS_Store
+Thumbs.db
