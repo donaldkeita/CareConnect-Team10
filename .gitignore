@@ -1,1 +1,11 @@
+# appropriate Flutter file to be ignored
+flutter-miscs/
 
+# appropriate React Native file to be ignored
+react-native-miscs/
+
+# appropriate ELectron file to be ignored
+electron-miscs/
+
+# appropriate React file to be ignored
+react-miscs/
