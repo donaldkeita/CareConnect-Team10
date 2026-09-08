@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.care_connect"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

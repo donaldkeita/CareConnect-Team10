@@ -1,3 +1,4 @@
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -58,6 +59,7 @@ class _AppointmentRequestDialogState extends State<AppointmentRequestDialog> {
   }
 
   Future<void> _selectAttachment() async {
+    //  final result = await FilePicker.platform.pickFiles
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf', 'png', 'jpg', 'jpeg', 'doc', 'docx'],
