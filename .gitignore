@@ -9,3 +9,6 @@ electron-miscs/
 
 # appropriate React file to be ignored
 react-miscs/
+
+# Code coverage directories
+coverage/

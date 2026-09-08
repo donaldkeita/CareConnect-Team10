@@ -151,6 +151,7 @@ class _AppointmentRequestDialogState extends State<AppointmentRequestDialog> {
                   label: 'Medical provider, required',
                   child: DropdownButtonFormField<String>(
                     initialValue: _selectedProvider,
+                    isExpanded: true,
                     decoration: const InputDecoration(
                       labelText: 'Medical provider (required)',
                       border: OutlineInputBorder(),
