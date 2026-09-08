@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/bottom_nav.dart';
 
 class MedicationsScreen extends StatelessWidget {
-  MedicationsScreen({super.key});
+  const MedicationsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

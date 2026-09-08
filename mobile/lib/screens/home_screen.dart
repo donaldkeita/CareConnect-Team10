@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/bottom_nav.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
