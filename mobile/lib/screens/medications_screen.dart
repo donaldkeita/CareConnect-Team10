@@ -1,78 +1,8 @@
 import 'package:flutter/material.dart';
 import '../widgets/bottom_nav.dart';
 
-class MedicationsScreen extends StatefulWidget {
+class MedicationsScreen extends StatelessWidget {
   const MedicationsScreen({super.key});
-
-  @override
-  State<MedicationsScreen> createState() => _MedicationsScreenState();
-}
-
-class _MedicationsScreenState extends State<MedicationsScreen> {
-  final List<Map<String, String>> _medications = [
-    {
-      'name': 'Lisinopril',
-      'dosage': '10 mg',
-      'frequency': 'Once daily',
-      'instructions': 'Take in the morning',
-      'provider': 'Dr. Sarah Chen',
-      'status': 'Missed',
-    },
-    {
-      'name': 'Metformin',
-      'dosage': '500 mg',
-      'frequency': 'Twice daily',
-      'instructions': 'Take with food',
-      'provider': 'Dr. Priya Nair',
-      'status': 'On track',
-    },
-    {
-      'name': 'Atorvastatin',
-      'dosage': '20 mg',
-      'frequency': 'Once daily',
-      'instructions': 'Take in the evening',
-      'provider': 'Dr. Sarah Chen',
-      'status': 'On track',
-    },
-    {
-      'name': 'Vitamin D3',
-      'dosage': '2000 IU',
-      'frequency': 'Once daily',
-      'instructions': 'Take with a meal',
-      'provider': 'Care Team',
-      'status': 'On track',
-    },
-  ];
-
-  Future<void> _openAddMedicationScreen() async {
-    final result = await Navigator.pushNamed(
-      context,
-      '/add-medication',
-    );
-
-    if (result is Map) {
-      final newMedication = <String, String>{
-        'name': result['name']?.toString() ?? '',
-        'dosage': result['dosage']?.toString() ?? '',
-        'frequency': result['frequency']?.toString() ?? '',
-        'instructions': result['instructions']?.toString() ?? '',
-        'provider': 'Added by patient',
-        'status': 'On track',
-      };
-
-      setState(() {
-        _medications.add(newMedication);
-      });
-
-      if (!mounted) return;
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Medication added successfully'),
-        ),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,129 +1,39 @@
 import 'package:flutter/material.dart';
+
+import '../models/appointment.dart';
+import '../services/appointment_service.dart';
+import '../widgets/appointment_request_dialog.dart';
 import '../widgets/bottom_nav.dart';
 
 class AppointmentsScreen extends StatelessWidget {
-  AppointmentsScreen({super.key});
+  AppointmentsScreen({super.key})
+    : _appointments = const AppointmentService().getUpcomingAppointments();
+
+  final List<Appointment> _appointments;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CareBottomNav(currentIndex: 1),
+      bottomNavigationBar: const CareBottomNav(currentIndex: 1),
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(28, 28, 28, 20),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      const Text(
-                        'Appointments',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const Spacer(),
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                        label: const Text('Request'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF24466F),
-                          foregroundColor: Colors.white,
-                          minimumSize: const Size(145, 58),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 22),
-
-                  Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF0F2F8),
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 16,
-                            ),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF24466F),
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                            child: const Text(
-                              'Upcoming',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 19,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const Expanded(
-                          child: Text(
-                            'Past',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFF60738F),
-                              fontSize: 19,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
+            _buildHeader(context),
             const Divider(height: 1),
-
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(24),
                 child: Column(
                   children: [
-                    _appointmentCard(
-                      doctor: 'Dr. Sarah Chen',
-                      specialty: 'Primary Care',
-                      date: 'Tue, Sep 1 · 12:20 AM',
-                      location:
-                          'Northside Medical Center, Suite 210',
-                      timeAway: '~4h away',
-                      telehealth: false,
-                    ),
-
-                    const SizedBox(height: 18),
-
-                    _appointmentCard(
-                      doctor: 'Dr. Marcus Webb',
-                      specialty: 'Cardiology',
-                      date: 'Tue, Sep 1 · 6:20 PM',
-                      location: 'Telehealth - Video Call',
-                      timeAway: '~22h away',
-                      telehealth: true,
-                    ),
-
-                    const SizedBox(height: 18),
-
-                    _appointmentCard(
-                      doctor: 'Dr. Priya Nair',
-                      specialty: 'Endocrinology',
-                      date: 'Sat, Sep 5 · 8:20 PM',
-                      location:
-                          'Westfield Health Pavilion, Room 114',
-                      telehealth: false,
-                    ),
+                    for (
+                      var index = 0;
+                      index < _appointments.length;
+                      index++
+                    ) ...[
+                      _buildAppointmentCard(_appointments[index]),
+                      if (index < _appointments.length - 1)
+                        const SizedBox(height: 18),
+                    ],
                   ],
                 ),
               ),
@@ -134,30 +44,130 @@ class AppointmentsScreen extends StatelessWidget {
     );
   }
 
-  Widget _appointmentCard({
-    required String doctor,
-    required String specialty,
-    required String date,
-    required String location,
-    String? timeAway,
-    required bool telehealth,
-  }) {
+  Widget _buildHeader(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 20),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final requestButton = Semantics(
+            button: true,
+            label: 'Request a new appointment',
+            child: ElevatedButton.icon(
+              onPressed: () => _showRequestDialog(context),
+              icon: const Icon(Icons.add),
+              label: const Text('Request Appointment'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF24466F),
+                foregroundColor: Colors.white,
+                minimumSize: const Size(210, 58),
+              ),
+            ),
+          );
+
+          return Column(
+            children: [
+              if (constraints.maxWidth < 520)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      'Appointments',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    requestButton,
+                  ],
+                )
+              else
+                Row(
+                  children: [
+                    const Text(
+                      'Appointments',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Spacer(),
+                    requestButton,
+                  ],
+                ),
+              const SizedBox(height: 22),
+              Semantics(
+                label: 'Appointment filter, Upcoming selected',
+                child: Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF0F2F8),
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF24466F),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: const Text(
+                            'Upcoming',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 19,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Expanded(
+                        child: Text(
+                          'Past',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFF60738F),
+                            fontSize: 19,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Future<void> _showRequestDialog(BuildContext context) async {
+    await showDialog<void>(
+      context: context,
+      builder: (context) => const AppointmentRequestDialog(),
+    );
+  }
+
+  Widget _buildAppointmentCard(Appointment appointment) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(
-          color: const Color(0xFFBDD7FF),
-        ),
+        border: Border.all(color: const Color(0xFFBDD7FF)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (timeAway != null) ...[
+          if (appointment.timeAway != null) ...[
             Text(
-              '• $timeAway',
+              '• ${appointment.timeAway}',
               style: const TextStyle(
                 color: Color(0xFF2E64E8),
                 fontWeight: FontWeight.bold,
@@ -166,7 +176,6 @@ class AppointmentsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 14),
           ],
-
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -178,79 +187,78 @@ class AppointmentsScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Icon(
-                  telehealth
+                  appointment.isTelehealth
                       ? Icons.videocam_outlined
                       : Icons.calendar_month_outlined,
                   color: const Color(0xFF2962E8),
                 ),
               ),
-
               const SizedBox(width: 14),
-
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      doctor,
+                      appointment.providerName,
                       style: const TextStyle(
                         fontSize: 19,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     Text(
-                      specialty,
+                      appointment.specialty,
                       style: const TextStyle(
                         color: Color(0xFF60738F),
                         fontSize: 15,
                       ),
                     ),
-
                     const SizedBox(height: 12),
-
                     Text(
-                      '◷ $date',
-                      style: const TextStyle(
-                        color: Color(0xFF60738F),
-                      ),
+                      '◷ ${appointment.dateLabel}',
+                      style: const TextStyle(color: Color(0xFF60738F)),
                     ),
-
                     const SizedBox(height: 6),
-
                     Text(
-                      '⌖ $location',
-                      style: const TextStyle(
-                        color: Color(0xFF60738F),
-                      ),
+                      '⌖ ${appointment.location}',
+                      style: const TextStyle(color: Color(0xFF60738F)),
                     ),
                   ],
                 ),
               ),
             ],
           ),
-
           const SizedBox(height: 16),
-
           Wrap(
             spacing: 10,
             runSpacing: 10,
             children: [
-              OutlinedButton(
-                onPressed: () {},
-                child: const Text('Reschedule'),
-              ),
-              OutlinedButton(
-                onPressed: () {},
-                child: const Text('Cancel'),
-              ),
-              if (telehealth)
-                ElevatedButton.icon(
+              Semantics(
+                button: true,
+                label:
+                    'Reschedule appointment with ${appointment.providerName}',
+                child: OutlinedButton(
                   onPressed: () {},
-                  icon: const Icon(
-                    Icons.videocam_outlined,
+                  child: const Text('Reschedule'),
+                ),
+              ),
+              Semantics(
+                button: true,
+                label: 'Cancel appointment with ${appointment.providerName}',
+                child: OutlinedButton(
+                  onPressed: () {},
+                  child: const Text('Cancel'),
+                ),
+              ),
+              if (appointment.isTelehealth)
+                Semantics(
+                  button: true,
+                  label:
+                      'Join telehealth appointment with ${appointment.providerName}',
+                  child: ElevatedButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(Icons.videocam_outlined),
+                    label: const Text('Join'),
                   ),
-                  label: const Text('Join'),
                 ),
             ],
           ),
