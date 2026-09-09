@@ -20,11 +20,7 @@ class CareBottomNav extends StatelessWidget {
     } else if (index == 2) {
       Navigator.pushReplacementNamed(context, '/medications');
     } else if (index == 3) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Inbox screen coming soon'),
-        ),
-      );
+      Navigator.pushReplacementNamed(context, '/inbox');
     }
   }
 
