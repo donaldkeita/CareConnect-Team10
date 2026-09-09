@@ -101,7 +101,14 @@ Team charter link: https://docs.google.com/document/d/1eyGg-CO_upiG2UkL0_sVFP8KA
 * Updated project documentation.
 
 **Donald Keita**
-
+* Designed and implemented the Inbox screen for CareConnect’s messaging module.
+* Added support for displaying message previews, timestamps, read/unread indicators, and sender metadata.
+* Developed the Send Message workflow, including message composition UI, subject/body fields, and validation rules.
+* Implemented the Reply Message feature, including automatic population of sender, subject prefix (“Re:”), and quoted message context.
+* Implemented data persistence with SQLite for all the functionalities.
+* Wrote unit tests for the Inbox message service, including inbox, send messages, reply to message.
+* Organized implementation of inbox, reply message, reply message separately in models, screens, services.
+* Reviewed code quality and resolve conflicts from pull requests and merge them to main repository.
 
 **Zack Bristor**
 * Developed the Request Appointments screen.
