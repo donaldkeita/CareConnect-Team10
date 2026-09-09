@@ -7,275 +7,303 @@ class MedicationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CareBottomNav(currentIndex: 2),
-      body: SafeArea(
-        child: Column(
+      backgroundColor: const Color(0xFFF5F7FA),
+
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color(0xFF24466F),
+        foregroundColor: Colors.white,
+        title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(28, 28, 28, 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Medications',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Your active prescriptions',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xFF60738F),
-                    ),
-                  ),
-                ],
+            Text(
+              'Medications',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
             ),
-
-            const Divider(height: 1),
-
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  children: [
-                    _medicationCard(
-                      name: 'Lisinopril',
-                      dose: '10 mg',
-                      schedule: 'Once daily · 8:00 AM',
-                      doctor: 'Chen',
-                      refill: 'Sep 14, 2026',
-                      missed: true,
-                      canMarkTaken: true,
-                    ),
-
-                    const SizedBox(height: 18),
-
-                    _medicationCard(
-                      name: 'Metformin',
-                      dose: '500 mg',
-                      schedule:
-                          'Twice daily · 8:00 AM, 8:00 PM',
-                      doctor: 'Nair',
-                      refill: 'Sep 22, 2026',
-                      missed: true,
-                      canMarkTaken: true,
-                    ),
-
-                    const SizedBox(height: 18),
-
-                    _medicationCard(
-                      name: 'Atorvastatin',
-                      dose: '20 mg',
-                      schedule:
-                          'Once daily (evening) · 9:00 PM',
-                      doctor: 'Webb',
-                      refill: 'Oct 3, 2026',
-                      missed: false,
-                      canMarkTaken: false,
-                    ),
-
-                    const SizedBox(height: 18),
-
-                    _medicationCard(
-                      name: 'Vitamin D3',
-                      dose: '2000 IU',
-                      schedule: 'Once daily · 8:00 AM',
-                      doctor: 'Chen',
-                      refill: 'Nov 1, 2026',
-                      missed: false,
-                      canMarkTaken: false,
-                    ),
-
-                    const SizedBox(height: 18),
-
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(24),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: const Color(0xFFD7E0EC),
-                        ),
-                        borderRadius:
-                            BorderRadius.circular(22),
-                      ),
-                      child: const Text(
-                        'Need to add a medication? Contact your care team.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFF60738F),
-                          fontSize: 19,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+            Text(
+              'Your active prescriptions',
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.normal,
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _medicationCard({
-    required String name,
-    required String dose,
-    required String schedule,
-    required String doctor,
-    required String refill,
-    required bool missed,
-    required bool canMarkTaken,
-  }) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(
-          color: missed
-              ? const Color(0xFFFFC58D)
-              : const Color(0xFFD7E0EC),
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: missed
-                  ? const Color(0xFFFFF6EB)
-                  : const Color(0xFFF0F5FA),
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: Icon(
-              Icons.medication_outlined,
-              color: missed
-                  ? const Color(0xFFFF5A1F)
-                  : const Color(0xFF24466F),
-            ),
-          ),
-
-          const SizedBox(width: 14),
-
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: RichText(
-                        text: TextSpan(
-                          style: const TextStyle(
-                            color: Color(0xFF131C2E),
-                            fontSize: 18,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: name,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            TextSpan(
-                              text: ' $dose',
-                              style: const TextStyle(
-                                color: Color(0xFF60738F),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    Chip(
-                      label: Text(
-                        missed ? 'Missed' : 'On track',
-                        style: TextStyle(
-                          color: missed
-                              ? const Color(0xFFBE1E2D)
-                              : const Color(0xFF137333),
-                        ),
-                      ),
-                    ),
-                  ],
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Semantics(
+              button: true,
+              label: 'Add a new medication',
+              child: ElevatedButton.icon(
+                onPressed: _openAddMedicationScreen,
+                icon: const Icon(Icons.add),
+                label: const Text('Add'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: const Color(0xFF173B68),
                 ),
-
-                Text(
-                  schedule,
-                  style: const TextStyle(
-                    color: Color(0xFF60738F),
-                  ),
-                ),
-
-                const SizedBox(height: 14),
-
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'By: $doctor',
-                        style: const TextStyle(
-                          color: Color(0xFF60738F),
-                        ),
-                      ),
-                    ),
-
-                    Text(
-                      'Refill: $refill',
-                      style: const TextStyle(
-                        color: Color(0xFF60738F),
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 14),
-
-                Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: [
-                    if (canMarkTaken)
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.check),
-                        label:
-                            const Text('Mark taken'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color(0xFF24466F),
-                          foregroundColor: Colors.white,
-                          minimumSize:
-                              const Size(125, 52),
-                        ),
-                      ),
-
-                    OutlinedButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(Icons.refresh),
-                      label: const Text('Refill'),
-                      style: OutlinedButton.styleFrom(
-                        minimumSize:
-                            const Size(100, 52),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
           ),
         ],
       ),
+
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final double horizontalPadding =
+                constraints.maxWidth > 700 ? 80 : 16;
+
+            return ListView(
+              padding: EdgeInsets.fromLTRB(
+                horizontalPadding,
+                20,
+                horizontalPadding,
+                24,
+              ),
+              children: [
+                Text(
+                  '${_medications.length} active medications',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF64748B),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                ..._medications.map(
+                  (medication) => _MedicationCard(
+                    medication: medication,
+                  ),
+                ),
+
+                const SizedBox(height: 8),
+
+                Semantics(
+                  button: true,
+                  label: 'Add medication',
+                  child: SizedBox(
+                    height: 64,
+                    child: ElevatedButton.icon(
+                      onPressed: _openAddMedicationScreen,
+                      icon: const Icon(Icons.add),
+                      label: const Text(
+                        'Add Medication',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF173B68),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFEAF1F8),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.info_outline,
+                        color: Color(0xFF173B68),
+                      ),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          'Need help managing your medications? '
+                          'Contact your care team for assistance.',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Color(0xFF173B68),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+
+      bottomNavigationBar: CareBottomNav(currentIndex: 2),
+    );
+  }
+}
+
+class _MedicationCard extends StatelessWidget {
+  final Map<String, String> medication;
+
+  const _MedicationCard({
+    required this.medication,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final bool missed = medication['status'] == 'Missed';
+
+    return Semantics(
+      container: true,
+      label:
+          '${medication['name']}, ${medication['dosage']}, '
+          '${medication['frequency']}',
+      child: Card(
+        margin: const EdgeInsets.only(bottom: 16),
+        elevation: 1,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 52,
+                    height: 52,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEAF1F8),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.medication_outlined,
+                      color: Color(0xFF173B68),
+                      size: 30,
+                    ),
+                  ),
+
+                  const SizedBox(width: 14),
+
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          medication['name'] ?? '',
+                          style: const TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF173B68),
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          medication['dosage'] ?? '',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF475569),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: missed
+                          ? const Color(0xFFFFE7E7)
+                          : const Color(0xFFE7F6EC),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      medication['status'] ?? '',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: missed
+                            ? const Color(0xFFB42318)
+                            : const Color(0xFF237A45),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 18),
+
+              _InfoRow(
+                icon: Icons.schedule,
+                text: medication['frequency'] ?? '',
+              ),
+
+              if ((medication['instructions'] ?? '').isNotEmpty) ...[
+                const SizedBox(height: 10),
+                _InfoRow(
+                  icon: Icons.notes,
+                  text: medication['instructions'] ?? '',
+                ),
+              ],
+
+              const SizedBox(height: 10),
+
+              _InfoRow(
+                icon: Icons.person_outline,
+                text: medication['provider'] ?? '',
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _InfoRow extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const _InfoRow({
+    required this.icon,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 20,
+          color: const Color(0xFF64748B),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            text,
+            style: const TextStyle(
+              fontSize: 15,
+              color: Color(0xFF475569),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
