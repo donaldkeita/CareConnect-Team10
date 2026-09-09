@@ -40,31 +40,6 @@ Sample/mock health and medication data is currently used.
 Newly added medications are currently stored in memory and may reset when the application restarts.
 Persistent storage and additional backend integration are still under development.
 Additional accessibility and device testing may still be required.
-Team Member Contributions This Week
-
-Sahil Kapoor
-
-Developed the Add Medication screen.
-Updated the Medications screen.
-Added medication form validation.
-Added medication name, dosage, frequency, and instructions fields.
-Updated navigation for the Add Medication workflow.
-Added accessibility improvements using Flutter Semantics.
-Added responsive layout improvements.
-Tested and debugged the medication workflow.
-Updated project documentation.
-Donald Keita
-
-Contribution to be added.
-Zack Bristor
-
-Developed the Request Appointments screen.
-Updated the Appointments screen.
-Added validation on Request Appointments.
-Added accessibility improvements using Flutter Semantics.
-Added responsive layout improvements.
-Tested and debugged the Appointments workflow.
-Updated project documentation.
 
 AI Usage Summary
 
@@ -126,10 +101,16 @@ Team charter link: https://docs.google.com/document/d/1eyGg-CO_upiG2UkL0_sVFP8KA
 * Updated project documentation.
 
 **Donald Keita**
-* Contribution to be added.
+
 
 **Zack Bristor**
-* Contribution to be added.
+* Developed the Request Appointments screen.
+* Updated the Appointments screen.
+* Added validation on Request Appointments.
+* Added accessibility improvements using Flutter Semantics.
+* Added responsive layout improvements.
+* Tested and debugged the Appointments workflow.
+* Updated project documentation.
 
 **AI Usage Summary**
 * AI was used to help update the Add Medication and Medications screens.
