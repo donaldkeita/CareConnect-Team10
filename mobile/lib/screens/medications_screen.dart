@@ -4,6 +4,41 @@ import '../widgets/bottom_nav.dart';
 class MedicationsScreen extends StatelessWidget {
   const MedicationsScreen({super.key});
 
+  static const List<Map<String, String>> _medications = [
+    {
+      'name': 'Lisinopril',
+      'dosage': '10 mg',
+      'frequency': 'Once daily',
+      'instructions': 'Take in the morning',
+      'provider': 'Care Team',
+      'status': 'Active',
+    },
+    {
+      'name': 'Metformin',
+      'dosage': '500 mg',
+      'frequency': 'Twice daily',
+      'instructions': 'Take with meals',
+      'provider': 'Care Team',
+      'status': 'Active',
+    },
+  ];
+
+  void _openAddMedicationScreen(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Add Medication'),
+        content: const Text('Medication entry is not available yet.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +74,7 @@ class MedicationsScreen extends StatelessWidget {
               button: true,
               label: 'Add a new medication',
               child: ElevatedButton.icon(
-                onPressed: _openAddMedicationScreen,
+                onPressed: () => _openAddMedicationScreen(context),
                 icon: const Icon(Icons.add),
                 label: const Text('Add'),
                 style: ElevatedButton.styleFrom(
@@ -91,7 +126,7 @@ class MedicationsScreen extends StatelessWidget {
                   child: SizedBox(
                     height: 64,
                     child: ElevatedButton.icon(
-                      onPressed: _openAddMedicationScreen,
+                      onPressed: () => _openAddMedicationScreen(context),
                       icon: const Icon(Icons.add),
                       label: const Text(
                         'Add Medication',

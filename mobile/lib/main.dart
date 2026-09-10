@@ -31,11 +31,10 @@ class CareConnectApp extends StatelessWidget {
       routes: {
         '/': (context) => HomeScreen(),
         '/appointments': (context) => AppointmentsScreen(),
-        flutter-implementation
+        // flutter-implementation
         '/medications': (context) => const MedicationsScreen(),
         '/add-medication': (context) => const AddMedicationScreen(),
         '/inbox': (context) => InboxScreen(),
-        main
       },
     );
   }
